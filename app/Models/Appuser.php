@@ -35,9 +35,9 @@ class Appuser extends Model
     |--------------------------------------------------------------------------
     */
 
-    // public function user_id()
+    // public function expenses()
     // {
-    //   return $this->hasMany('App\Models\Expenses', 'id');
+    //     return $this->hasOne('App\Models\Expenses', 'name');
     // }
 
     /*
