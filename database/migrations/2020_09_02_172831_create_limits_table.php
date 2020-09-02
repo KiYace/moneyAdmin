@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBillsTable extends Migration
+class CreateLimitsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateBillsTable extends Migration
      */
     public function up()
     {
-        Schema::create('bills', function (Blueprint $table) {
+        Schema::create('limits', function (Blueprint $table) {
             $table->id();
-            $table->string('bill_name', 25)->nullable(false);
+            $table->integer('category_id')->nullable(false);
             $table->integer('user_id')->nullable(false);
-            $table->float('balance')->nullable(false);
-            $table->string('currency')->default('RUB');
-            $table->float('limit')->nullable();;
+            $table->float('limit')->nullable();
 
             $table->timestamps();
         });
@@ -32,6 +30,6 @@ class CreateBillsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bills');
+        Schema::dropIfExists('limits');
     }
 }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class Expenses extends Model
+class Category extends Model
 {
     use CrudTrait;
 
@@ -15,8 +15,8 @@ class Expenses extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'expenses';
-    protected $primaryKey = 'id';
+    protected $table = 'categories';
+    // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
     // protected $fillable = [];
@@ -34,21 +34,6 @@ class Expenses extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
-    public function user()
-    {
-      return $this->belongsTo('App\Models\Appuser', 'user_id', 'id');
-    }
-
-    public function bill()
-    {
-      return $this->belongsTo('App\Models\Bill', 'bill_id', 'id');
-    }
-
-    public function category()
-    {
-      return $this->belongsTo('App\Models\Category', 'category_id', 'id');
-    }
 
     /*
     |--------------------------------------------------------------------------

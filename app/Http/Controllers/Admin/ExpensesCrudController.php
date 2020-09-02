@@ -52,8 +52,8 @@ class ExpensesCrudController extends CrudController
         ]);
         $this->crud->addColumn([
           'type' => 'text',
-          'name' => 'user_name',
-          'label' => 'Пользователь',
+          'name' => 'user_id',
+          'label' => 'ИД пользователя',
         ]);
         $this->crud->addColumn([
           'type' => 'text',
@@ -104,18 +104,19 @@ class ExpensesCrudController extends CrudController
     {
         CRUD::setValidation(ExpensesRequest::class);
         
-
         $this->crud->addField([
           'type' => 'select2',
-          'name' => 'user_name',
+          'name' => 'user_id',
           'entity' => 'user',
-          'attribute' => 'name',
-          'label' => 'Пользователь',
+          'attribute' => 'id',
+          'label' => 'ИД пользователя',
         ]);
         $this->crud->addField([
-          'type' => 'text',
+          'type' => 'select2',
           'name' => 'category_id',
-          'label' => 'Категория',
+          'entity' => 'category',
+          'attribute' => 'id',
+          'label' => 'ИД категории',
         ]);
         $this->crud->addField([
           'type' => 'number',

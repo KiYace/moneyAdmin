@@ -2,4 +2,6 @@
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('dashboard') }}"><i class="la la-home nav-icon"></i> {{ trans('backpack::base.dashboard') }}</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('appuser') }}'><i class='nav-icon la la-smile-beam'></i> Клиенты</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('expenses') }}'><i class='nav-icon la la-grin-beam-sweat'></i> Расходы</a></li>
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('bill') }}'><i class='nav-icon la la-question'></i> Bills</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('bill') }}'><i class='nav-icon la la-money-bill'></i> Счета</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('category') }}'><i class='nav-icon la la-shopping-bag'></i> Категории</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('limit') }}'><i class='nav-icon la la-lock'></i> Лимиты</a></li>

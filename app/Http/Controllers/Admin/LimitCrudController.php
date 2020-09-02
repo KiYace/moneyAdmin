@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\BillRequest;
+use App\Http\Requests\LimitRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class BillCrudController
+ * Class LimitCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class BillCrudController extends CrudController
+class LimitCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class BillCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Bill::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/bill');
-        CRUD::setEntityNameStrings('счет', 'Счета');
+        CRUD::setModel(\App\Models\Limit::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/limit');
+        CRUD::setEntityNameStrings('лимит', 'Лимиты');
     }
 
     /**
@@ -40,10 +40,10 @@ class BillCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->crud->addColumn([
-            'type' => 'text',
-            'name' => 'bill_name',
-            'label' => 'Название счета',
-          ]);
+          'type' => 'text',
+          'name' => 'category_id',
+          'label' => 'ИД категории',
+        ]);
         $this->crud->addColumn([
           'type' => 'text',
           'name' => 'user_id',
@@ -51,19 +51,8 @@ class BillCrudController extends CrudController
         ]);
         $this->crud->addColumn([
           'type' => 'number',
-          'name' => 'balance',
-          'label' => 'Баланс',
-        ]);
-        $this->crud->addColumn([
-          'type' => 'select_from_array',
-          'options' => ['RUB' => 'Рубли', 'USD' => 'Доллары', 'EUR' => 'Евро'],
-          'name' => 'currency',
-          'label' => 'Валюта',
-        ]);
-        $this->crud->addColumn([
-          'type' => 'number',
           'name' => 'limit',
-          'label' => 'Ограничения в месяц',
+          'label' => 'Лимит по категории',
         ]);
     }
 
@@ -75,11 +64,14 @@ class BillCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(BillRequest::class);
+        CRUD::setValidation(LimitRequest::class);
+
         $this->crud->addField([
-          'type' => 'text',
-          'name' => 'bill_name',
-          'label' => 'Название счета',
+          'type' => 'select2',
+          'name' => 'category_id',
+          'entity' => 'category',
+          'attribute' => 'id',
+          'label' => 'ИД категории',
         ]);
         $this->crud->addField([
           'type' => 'select2',
@@ -90,19 +82,8 @@ class BillCrudController extends CrudController
         ]);
         $this->crud->addField([
           'type' => 'number',
-          'name' => 'balance',
-          'label' => 'Баланс',
-        ]);
-        $this->crud->addField([
-          'type' => 'select_from_array',
-          'options' => ['RUB' => 'RUB', 'USD' => 'USD', 'EUR' => 'EUR'],
-          'name' => 'currency',
-          'label' => 'Валюта',
-        ]);
-        $this->crud->addField([
-          'type' => 'number',
           'name' => 'limit',
-          'label' => 'Ограничения в месяц',
+          'label' => 'Лимит по категории',
         ]);
     }
 
