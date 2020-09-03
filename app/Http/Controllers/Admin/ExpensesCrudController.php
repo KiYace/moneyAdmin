@@ -82,6 +82,22 @@ class ExpensesCrudController extends CrudController
           'label' => 'Важность',
         ]);
         $this->crud->addColumn([
+          'type' => 'text',
+          'name' => 'tags',
+          'label' => 'Теги',
+        ]);
+        $this->crud->addColumn([
+          'type' => 'text',
+          'name' => 'notice',
+          'label' => 'Примечание',
+        ]);
+        $this->crud->addColumn([
+          'type' => 'select_from_array',
+          'options' => ['0' => 'Каждый день', '1' => 'Каждую неделю', '2' => 'Каждый месяц'],
+          'name' => 'repeat',
+          'label' => 'Повтор',
+        ]);
+        $this->crud->addColumn([
           'type' => 'datetime',
           'name' => 'created_at',
           'label' => 'Создан',
@@ -140,6 +156,22 @@ class ExpensesCrudController extends CrudController
           'options' => ['0' => 'Не важно', '1' => 'Важно', '2' => 'Очень важно'],
           'name' => 'important',
           'label' => 'Важность',
+        ]);
+        $this->crud->addField([
+          'type' => 'text',
+          'name' => 'tags',
+          'label' => 'Теги',
+        ]);
+        $this->crud->addField([
+          'type' => 'text',
+          'name' => 'notice',
+          'label' => 'Примечание',
+        ]);
+        $this->crud->addField([
+          'type' => 'select_from_array',
+          'options' => ['0' => 'Каждый день', '1' => 'Каждую неделю', '2' => 'Каждый месяц'],
+          'name' => 'repeat',
+          'label' => 'Повтор',
         ]);
 
         /**
