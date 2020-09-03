@@ -15,13 +15,13 @@ class AddFieldToExpensesTable extends Migration
     {
         Schema::table('expenses', function (Blueprint $table) {
             $table->json('tags_id')->nullable();
-            $table->string('notice')->nullable();
+            $table->string('notice', 100)->nullable();
             $table->integer('repeat')->nullable();
         });
 
         Schema::table('incomes', function (Blueprint $table) {
             $table->json('tags_id')->nullable();
-            $table->string('notice')->nullable();
+            $table->string('notice', 100)->nullable();
             $table->integer('repeat')->nullable();
         });
     }

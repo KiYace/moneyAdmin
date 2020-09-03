@@ -17,7 +17,7 @@ class CreateLimitsTable extends Migration
             $table->id();
             $table->integer('category_id')->nullable(false);
             $table->integer('user_id')->nullable(false);
-            $table->float('limit')->nullable();
+            $table->float('limit', 20, 2)->nullable();
 
             $table->timestamps();
         });

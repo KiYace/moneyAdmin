@@ -17,9 +17,9 @@ class CreateExpensesTable extends Migration
             $table->id();
             $table->integer('user_id')->nullable(false);
             $table->integer('category_id')->nullable(false);
-            $table->float('sum')->nullable(false);
+            $table->float('sum', 20, 2)->nullable(false);
             $table->integer('bill_id')->nullable(false);
-            $table->string('shop')->nullable(false);
+            $table->string('shop', 20)->nullable(false);
             $table->integer('important');
 
             $table->timestamps();

@@ -17,9 +17,9 @@ class CreateBillsTable extends Migration
             $table->id();
             $table->string('bill_name', 25)->nullable(false);
             $table->integer('user_id')->nullable(false);
-            $table->float('balance')->nullable(false);
-            $table->string('currency')->default('RUB');
-            $table->float('limit')->nullable();;
+            $table->float('balance', 30, 2)->nullable(false);
+            $table->string('currency', 3)->default('RUB');
+            $table->float('limit', 20, 2)->nullable();;
 
             $table->timestamps();
         });

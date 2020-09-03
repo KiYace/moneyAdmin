@@ -15,9 +15,9 @@ class CreateSourcesTable extends Migration
     {
         Schema::create('sources', function (Blueprint $table) {
             $table->id();
-            $table->string('source_name')->nullable(false)->unique();
-            $table->string('source_ico')->nullable();
-            $table->string('color')->nullable();
+            $table->string('source_name', 20)->nullable(false)->unique();
+            $table->string('source_ico', 10)->nullable();
+            $table->string('color', 7)->nullable();
             $table->integer('user_id')->nullable();
 
             $table->timestamps();

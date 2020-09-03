@@ -16,10 +16,10 @@ class CreateAppusersTable extends Migration
         Schema::create('appusers', function (Blueprint $table) {
             $table->id();
             $table->string('name', 25)->nullable(false)->unique();
-            $table->string('email')->nullable(false)->unique();
-            $table->float('salary')->nullable();
-            $table->float('income')->nullable();
-            $table->float('expenses')->nullable();
+            $table->string('email', 30)->nullable(false)->unique();
+            $table->float('salary', 20, 2)->nullable();
+            $table->float('income', 20, 2)->nullable();
+            $table->float('expenses', 20, 2)->nullable();
             
             $table->timestamps();
         });

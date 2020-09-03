@@ -14,7 +14,7 @@ class AddFieldToCategoriesTable extends Migration
     public function up()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->string('color')->nullable();
+            $table->string('color', 7)->nullable();
             $table->integer('user_id')->nullable();
         });
     }
