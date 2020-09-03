@@ -7,3 +7,4 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('category') }}'><i class='nav-icon la la-shopping-bag'></i> Категории</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('tag') }}'><i class='nav-icon la la-tags'></i> Теги</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('limit') }}'><i class='nav-icon la la-lock'></i> Лимиты</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('source') }}'><i class='nav-icon la la-dollar-sign'></i> Источники дохода</a></li>

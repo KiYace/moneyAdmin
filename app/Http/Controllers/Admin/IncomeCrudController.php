@@ -82,7 +82,7 @@ class IncomeCrudController extends CrudController
         ]);
         $this->crud->addColumn([
           'type' => 'select_from_array',
-          'options' => ['0' => 'Каждый день', '1' => 'Каждую неделю', '2' => 'Каждый месяц'],
+          'options' => ['0' => '', '1' => 'Каждый день', '2' => 'Каждую неделю', '3' => 'Каждый месяц'],
           'name' => 'repeat',
           'label' => 'Повтор',
         ]);
@@ -128,9 +128,11 @@ class IncomeCrudController extends CrudController
           'label' => 'Счет',
         ]);
         $this->crud->addField([
-          'type' => 'text',
+          'type' => 'select2',
           'name' => 'source',
-          'label' => 'Источник дохода',
+          'entity' => 'source',
+          'attribute' => 'source_name',
+          'label' => 'Источник',
         ]);
         $this->crud->addField([
           'type' => 'select_from_array',
@@ -152,7 +154,7 @@ class IncomeCrudController extends CrudController
         ]);
         $this->crud->addField([
           'type' => 'select_from_array',
-          'options' => ['0' => 'Каждый день', '1' => 'Каждую неделю', '2' => 'Каждый месяц'],
+          'options' => ['0' => '', '1' => 'Каждый день', '2' => 'Каждую неделю', '3' => 'Каждый месяц'],
           'name' => 'repeat',
           'label' => 'Повтор',
         ]);
