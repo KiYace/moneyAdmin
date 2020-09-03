@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\TagRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class CategoryCrudController
+ * Class TagCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class CategoryCrudController extends CrudController
+class TagCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class CategoryCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Category::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/category');
-        CRUD::setEntityNameStrings('категорию', 'Категории');
+        CRUD::setModel(\App\Models\Tag::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/tag');
+        CRUD::setEntityNameStrings('тег', 'Теги');
     }
 
     /**
@@ -41,13 +41,13 @@ class CategoryCrudController extends CrudController
     {
         $this->crud->addColumn([
           'type' => 'text',
-          'name' => 'category_name',
-          'label' => 'Название категории',
+          'name' => 'tag_name',
+          'label' => 'Название тега',
         ]);
         $this->crud->addColumn([
           'type' => 'text',
-          'name' => 'category_ico',
-          'label' => 'Иконка категории',
+          'name' => 'tag_ico',
+          'label' => 'Иконка тега',
         ]);
         $this->crud->addColumn([
           'type' => 'text',
@@ -75,17 +75,17 @@ class CategoryCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(CategoryRequest::class);
+        CRUD::setValidation(TagRequest::class);
 
         $this->crud->addField([
           'type' => 'text',
-          'name' => 'category_name',
-          'label' => 'Название категории',
+          'name' => 'tag_name',
+          'label' => 'Название тега',
         ]);
         $this->crud->addField([
           'type' => 'text',
-          'name' => 'category_ico',
-          'label' => 'Иконка категории',
+          'name' => 'tag_ico',
+          'label' => 'Иконка тега',
         ]);
         $this->crud->addField([
           'type' => 'color_picker',
