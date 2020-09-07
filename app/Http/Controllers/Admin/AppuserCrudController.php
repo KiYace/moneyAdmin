@@ -53,6 +53,11 @@ class AppuserCrudController extends CrudController
         $this->crud->addColumn([
           'type' => 'text',
           'name' => 'name',
+          'label' => 'Ник',
+        ]);
+        $this->crud->addColumn([
+          'type' => 'text',
+          'name' => 'sec_name',
           'label' => 'Имя',
         ]);
         $this->crud->addColumn([
@@ -79,6 +84,21 @@ class AppuserCrudController extends CrudController
           'type' => 'number',
           'name' => 'expenses',
           'label' => 'Расход',
+        ]);
+        $this->crud->addColumn([
+          'type' => 'number',
+          'name' => 'token',
+          'label' => 'Токен авторизации',
+        ]);
+        $this->crud->addColumn([
+          'type' => 'number',
+          'name' => 'push_token',
+          'label' => 'Токен для отправки PUSH',
+        ]);
+        $this->crud->addColumn([
+          'type' => 'check',
+          'name' => 'push_enabled',
+          'label' => 'PUSH уведомления',
         ]);
         $this->crud->addColumn([
           'type' => 'datetime',
@@ -111,6 +131,11 @@ class AppuserCrudController extends CrudController
         $this->crud->addField([
           'type' => 'text',
           'name' => 'name',
+          'label' => 'Ник',
+        ]);
+        $this->crud->addField([
+          'type' => 'text',
+          'name' => 'sec_name',
           'label' => 'Имя',
         ]);
         $this->crud->addField([
@@ -137,6 +162,21 @@ class AppuserCrudController extends CrudController
           'type' => 'number',
           'name' => 'expenses',
           'label' => 'Расход',
+        ]);
+        $this->crud->addField([
+          'type' => 'number',
+          'name' => 'token',
+          'label' => 'Токен авторизации',
+        ]);
+        $this->crud->addField([
+          'type' => 'number',
+          'name' => 'push_token',
+          'label' => 'Токен для отправки PUSH',
+        ]);
+        $this->crud->addField([
+          'type' => 'checkbox',
+          'name' => 'push_enabled',
+          'label' => 'PUSH уведомления',
         ]);
     }
 
