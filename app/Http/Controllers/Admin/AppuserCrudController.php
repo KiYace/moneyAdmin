@@ -86,12 +86,12 @@ class AppuserCrudController extends CrudController
           'label' => 'Расход',
         ]);
         $this->crud->addColumn([
-          'type' => 'number',
+          'type' => 'text',
           'name' => 'token',
           'label' => 'Токен авторизации',
         ]);
         $this->crud->addColumn([
-          'type' => 'number',
+          'type' => 'text',
           'name' => 'push_token',
           'label' => 'Токен для отправки PUSH',
         ]);
@@ -164,12 +164,12 @@ class AppuserCrudController extends CrudController
           'label' => 'Расход',
         ]);
         $this->crud->addField([
-          'type' => 'number',
+          'type' => 'text',
           'name' => 'token',
           'label' => 'Токен авторизации',
         ]);
         $this->crud->addField([
-          'type' => 'number',
+          'type' => 'text',
           'name' => 'push_token',
           'label' => 'Токен для отправки PUSH',
         ]);
