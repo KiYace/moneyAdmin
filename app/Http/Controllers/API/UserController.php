@@ -72,7 +72,6 @@ class UserController extends BaseController
     public function editUser(Request $request, $id)
     {
         $appuser = Appuser::find($id);
-        $appuser->fill($request->all());
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:appusers',
             'sec_name' => 'required',
@@ -84,9 +83,12 @@ class UserController extends BaseController
         if($validator->fails()){
             return $this->sendError('Ошибка валидации.', $errorMessages);       
         }
+        $appuser->fill($request->all());
         $appuser->save();
         return $this->sendResponse($appuser, 'Данные пользовтаеля успешно изменены.');
     }
+
+
     public function userLogin(Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => 'required_if:email,""',
