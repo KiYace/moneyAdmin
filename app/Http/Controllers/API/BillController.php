@@ -4,8 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Http\Request;
-use App\Models\Appuser;
 use App\Models\Bill;
+use App\Models\Expenses;
+use App\Models\Income;
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
@@ -85,9 +86,16 @@ class BillController extends BaseController
     public function deleteBill($id)
     {
         $bill = Bill::find($id);
+
         if (is_null($bill)) {
             return $this->sendError('Счет не найден.');
         }
+
+        /* Удаление расходов и доходов текущего счета */
+        $expenses = Expenses::where('bill_id', $id)->delete();
+        $incomes = Income::where('bill_id', $id)->delete();
+        /* END Удаление расходов и доходов текущего счета */
+
         $bill->delete();
         return $this->sendResponse($bill, 'Счет успешно удален.');
     }
