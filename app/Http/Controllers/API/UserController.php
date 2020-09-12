@@ -59,7 +59,7 @@ class UserController extends BaseController
         if (is_null($appuser)) {
             return $this->sendError('Пользователь не найден.');
         }
-        return $this->sendResponse($appuser->toArray(), 'Пользователь успешно найден.');
+        return $this->sendResponse($appuser->toArray(), 'Пользователь успешно загружен.');
     }
 
     /**

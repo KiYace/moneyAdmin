@@ -27,7 +27,7 @@ class BillController extends BaseController
         if (is_null($bills)) {
             return $this->sendError('Счет не найден.');
         }
-        return $this->sendResponse($bills->toArray(), 'Счет успешно найден.');
+        return $this->sendResponse($bills->toArray(), 'Счет успешно загружен.');
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:api')->get('register', function (Request $request) {
-    return $request->user();
-});
 
 Route::group(['prefix' => 'users'], function () {
   Route::post('register', 'API\UserController@register');
@@ -31,3 +27,15 @@ Route::group(['prefix' => 'bills'], function () {
   Route::post('edit/{id}', 'API\BillController@editBill');
   Route::get('delete/{id}', 'API\BillController@deleteBill');
 });
+
+Route::group(['prefix' => 'expenses'], function () {
+  Route::get('user/{id}', 'API\ExpensesController@getUserExpenses');
+  Route::get('bill/{id}', 'API\ExpensesController@getBillExpenses');
+  Route::post('create', 'API\ExpensesController@createExpense');
+  Route::post('edit/{id}', 'API\ExpensesController@editExpense');
+  Route::post('copy/{id}', 'API\ExpensesController@copyExpense');
+  Route::get('delete/{id}', 'API\ExpensesController@deleteExpense');
+});
+
+Route::get('transactions/{id}', 'API\ExpensesController@getUserTransactions');
+Route::get('transactions/bill/{id}', 'API\ExpensesController@getUserTransactionsByBill');
