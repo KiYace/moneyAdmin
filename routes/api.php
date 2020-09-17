@@ -39,3 +39,17 @@ Route::group(['prefix' => 'expenses'], function () {
 
 Route::get('transactions/{id}', 'API\ExpensesController@getUserTransactions');
 Route::get('transactions/bill/{id}', 'API\ExpensesController@getUserTransactionsByBill');
+
+Route::group(['prefix' => 'category'], function () {
+  Route::get('user/{id}', 'API\CategoryController@getUserCategories');
+  Route::post('create', 'API\CategoryController@createUserCategory');
+  Route::post('edit/{id}', 'API\CategoryController@editCategory');
+  Route::get('delete/{id}', 'API\CategoryController@deleteCategory');
+});
+
+Route::group(['prefix' => 'tag'], function () {
+  Route::get('user/{id}', 'API\TagController@getUserTags');
+  Route::post('create', 'API\TagController@createUserTag');
+  Route::post('edit/{id}', 'API\TagController@editTag');
+  Route::get('delete/{id}', 'API\TagController@deleteTag');
+});

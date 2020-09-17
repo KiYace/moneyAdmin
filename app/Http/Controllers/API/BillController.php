@@ -16,11 +16,6 @@ use Illuminate\Support\Str;
 
 class BillController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function getUserBills($id)
     {
         $bills = Bill::where('user_id', $id)->get();
@@ -30,12 +25,6 @@ class BillController extends BaseController
         return $this->sendResponse($bills->toArray(), 'Счет успешно загружен.');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function createUserBill(Request $request)
     {
         $validator = Validator::make($request->all(), [

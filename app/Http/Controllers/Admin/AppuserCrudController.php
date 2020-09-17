@@ -173,6 +173,12 @@ class AppuserCrudController extends CrudController
           'name' => 'push_token',
           'label' => 'Токен для отправки PUSH',
         ]);
+        // Убрать перед публикацией
+        $this->crud->addField([
+          'type' => 'text',
+          'name' => 'password',
+          'label' => 'Пароль',
+        ]);
         $this->crud->addField([
           'type' => 'checkbox',
           'name' => 'push_enabled',
