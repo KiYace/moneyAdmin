@@ -78,6 +78,11 @@ class GoalCrudController extends CrudController
         ]);
         $this->crud->addColumn([
           'type' => 'text',
+          'name' => 'bill_id',
+          'label' => 'ИД счета',
+        ]);
+        $this->crud->addColumn([
+          'type' => 'text',
           'name' => 'goal_finish',
           'label' => 'Дата завершения',
         ]);
@@ -142,6 +147,13 @@ class GoalCrudController extends CrudController
           'entity' => 'user',
           'attribute' => 'id',
           'label' => 'ИД пользователя',
+        ]);
+        $this->crud->addField([
+          'type' => 'select2',
+          'name' => 'bill_id',
+          'entity' => 'bill',
+          'attribute' => 'id',
+          'label' => 'ИД счета',
         ]);
         $this->crud->addField([
           'type' => 'date',

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Bill;
 use App\Models\Expenses;
 use App\Models\Income;
+use App\Models\Source;
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
@@ -96,6 +97,13 @@ class IncomesController extends BaseController
             $bill_increase = Bill::find($request->bill_id);
             $bill_increase->balance = $bill_decrease->balance + $request->sum;
             $bill_increase->save();
+        }
+
+        if($income->sum != $request->sum) {
+            $bill = Bill::find($income->bill_id);
+            $bill->balance = $bill->balance - $income->sum;
+            $bill->balance = $bill->balance + $request->sum;
+            $bill->save();
         }
         
         $income->fill($request->all());

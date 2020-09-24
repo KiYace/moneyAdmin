@@ -50,12 +50,6 @@ class ExpensesController extends BaseController
         return $this->sendResponse($transactions, 'Транзакции успешно загружены.');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function createExpense(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -80,13 +74,6 @@ class ExpensesController extends BaseController
         return $this->sendResponse($expense, 'Расход успешно создан.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function editExpense(Request $request, $id)
     {
         $expense = Expenses::find($id);
@@ -110,8 +97,16 @@ class ExpensesController extends BaseController
             $bill_increase->balance = $bill_increase->balance + $expense->sum;
             $bill_increase->save();
             $bill_decrease = Bill::find($request->bill_id);
-            $bill_decrease->balance = $bill_decrease->balance - $expense->sum;
+            $bill_decrease->balance = $bill_decrease->balance - $request->sum;
             $bill_decrease->save();
+        }
+
+        /* Обработка суммы */
+        if($expense->sum != $request->sum) {
+            $bill = Bill::find($expense->bill_id);
+            $bill->balance = $bill->balance + $expense->sum;
+            $bill->balance = $bill->balance - $request->sum;
+            $bill->save();
         }
         
         $expense->fill($request->all());
@@ -119,12 +114,6 @@ class ExpensesController extends BaseController
         return $this->sendResponse($expense, 'Данные расхода успешно изменены.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function deleteExpense($id)
     {
         $expense = Expenses::find($id);

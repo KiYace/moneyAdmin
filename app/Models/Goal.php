@@ -39,6 +39,10 @@ class Goal extends Model
     {
       return $this->belongsTo('App\Models\Appuser', 'user_id', 'id');
     }
+    public function bill()
+    {
+      return $this->belongsTo('App\Models\Bill', 'bill_id', 'id');
+    }
 
     /*
     |--------------------------------------------------------------------------
