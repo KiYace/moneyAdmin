@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddFieldToCategoryAndSourceTable extends Migration
+class AddFieldToExpensesAndIcomesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class AddFieldToCategoryAndSourceTable extends Migration
      */
     public function up()
     {
-        Schema::table('categories', function (Blueprint $table) {
-            $table->boolean('display')->nullable()->deafult(true);
+        Schema::table('expenses', function (Blueprint $table) {
+            $table->integer('debt_id')->nullable()->after('goal_id');
         });
-        Schema::table('sources', function (Blueprint $table) {
-            $table->boolean('display')->nullable()->deafult(true);
+        Schema::table('incomes', function (Blueprint $table) {
+            $table->integer('debt_id')->nullable()->after('goal_id');
         });
     }
 
@@ -28,11 +28,11 @@ class AddFieldToCategoryAndSourceTable extends Migration
      */
     public function down()
     {
-        Schema::table('categories', function (Blueprint $table) {
-            $table->dropColumn('display');
+        Schema::table('expenses', function (Blueprint $table) {
+            $table->dropColumn('debt_id');
         });
-        Schema::table('sources', function (Blueprint $table) {
-            $table->dropColumn('display');
+        Schema::table('incomes', function (Blueprint $table) {
+            $table->dropColumn('debt_id');
         });
     }
 }

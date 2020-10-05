@@ -34,6 +34,24 @@ class ExpensesController extends BaseController
         return $this->sendResponse($expenses->toArray(), 'Расходы успешно загружены.');
     }
 
+    public function getCategoryExpenses($id)
+    {
+        $expenses = Expenses::where('category_id', $id)->get();
+        if (is_null($expenses)) {
+            return $this->sendError('Расходы не найдены.');
+        }
+        return $this->sendResponse($expenses->toArray(), 'Расходы успешно загружены.');
+    }
+
+    public function getTagExpenses($id)
+    {
+        $expenses = Expenses::whereJsonContains('tags_id', $id)->get();
+        if (is_null($expenses)) {
+            return $this->sendError('Расходы не найдены.');
+        }
+        return $this->sendResponse($expenses->toArray(), 'Расходы успешно загружены.');
+    }
+
     public function getUserTransactions($id)
     {
         $expenses = Expenses::where('user_id', $id)->get();

@@ -44,10 +44,27 @@ Route::group(
   function () {
   Route::get('user/{id}', 'API\ExpensesController@getUserExpenses');
   Route::get('bill/{id}', 'API\ExpensesController@getBillExpenses');
+  Route::get('category/{id}', 'API\ExpensesController@getCategoryExpenses');
+  Route::get('tag/{id}', 'API\ExpensesController@getTagExpenses');
   Route::post('create', 'API\ExpensesController@createExpense');
   Route::post('edit/{id}', 'API\ExpensesController@editExpense');
   Route::post('copy/{id}', 'API\ExpensesController@copyExpense');
   Route::get('delete/{id}', 'API\ExpensesController@deleteExpense');
+});
+
+Route::group(
+  [
+    'prefix' => 'incomes'
+  ], 
+  function () {
+  Route::get('user/{id}', 'API\IncomesController@getUserIncomes');
+  Route::get('bill/{id}', 'API\IncomesController@getBillIncomes');
+  Route::get('source/{id}', 'API\IncomesController@getSourceIncomes');
+  Route::get('tag/{id}', 'API\IncomesController@getTagIncomes');
+  Route::post('create', 'API\IncomesController@createIncome');
+  Route::post('edit/{id}', 'API\IncomesController@editIncome');
+  Route::post('copy/{id}', 'API\IncomesController@copyIncome');
+  Route::get('delete/{id}', 'API\IncomesController@deleteIncome');
 });
 
 Route::get('transactions/{id}', 'API\ExpensesController@getUserTransactions');

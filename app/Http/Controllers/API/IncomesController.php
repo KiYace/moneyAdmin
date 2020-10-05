@@ -35,6 +35,24 @@ class IncomesController extends BaseController
         return $this->sendResponse($incomes->toArray(), 'Доходы успешно загружены.');
     }
 
+    public function getSourceIncomes($id)
+    {
+        $incomes = Income::where('source', $id)->get();
+        if (is_null($incomes)) {
+            return $this->sendError('Доходы не найдены.');
+        }
+        return $this->sendResponse($incomes->toArray(), 'Доходы успешно загружены.');
+    }
+
+    public function getTagIncomes($id)
+    {
+        $incomes = Income::whereJsonContains('tags_id', $id)->get();
+        if (is_null($incomes)) {
+            return $this->sendError('Доходы не найдены.');
+        }
+        return $this->sendResponse($incomes->toArray(), 'Доходы успешно загружены.');
+    }
+
     /**
      * Store a newly created resource in storage.
      *

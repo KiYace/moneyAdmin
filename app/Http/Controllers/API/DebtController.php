@@ -234,6 +234,7 @@ class DebtController extends BaseController
                 'source' => $source->id,
                 'sum' => $debt->debt_sum,
                 'bill_id' => $debt->bill_id,
+                'debt_id' => $debt->id,
                 'shop' => '123123',
                 'important' => $debt->debt_important,
             );
@@ -257,6 +258,7 @@ class DebtController extends BaseController
                 'user_id' => $debt->user_id,
                 'category_id' => $category->id,
                 'bill_id' => $debt->bill_id,
+                'debt_id' => $debt->id,
                 'shop' => '123123',
                 'sum' => $debt->debt_sum,
                 'important' => $debt->debt_important,
@@ -282,8 +284,12 @@ class DebtController extends BaseController
         $bill = Bill::find($debt->bill_id);
         if($debt->debt_type == 0) {
             $bill->balance = $bill->balance + $debt->debt_sum;
-        }elseif($debt->debt_type == 1) {
+            $expenses = Expenses::where('debt_id', $debt->debt_id);
+            $expenses->delete();
+        } elseif($debt->debt_type == 1) {
             $bill->balance = $bill->balance - $debt->debt_sum;
+            $incomes = Incomes::where('debt_id', $debt->debt_id);
+            $incomes->delete();
         }
         
         $bill->save();

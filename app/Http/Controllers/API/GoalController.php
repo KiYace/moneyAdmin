@@ -164,6 +164,8 @@ class GoalController extends BaseController
         $goal = Goal::find($id);
         $bill = Bill::find($goal->bill_id);
         $bill->balance = $bill->balance + $goal->goal_balance;
+        $expenses = Expenses::where('goal_id', $goal->bill_id);
+        $expenses->delete();
         $bill->save();
         $goal->delete();
 
