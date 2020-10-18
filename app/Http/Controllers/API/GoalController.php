@@ -10,6 +10,7 @@ use App\Models\Expenses;
 use App\Models\Income;
 use App\Models\Category;
 use App\Models\Source;
+use App\Models\GoalReminder;
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
@@ -76,6 +77,31 @@ class GoalController extends BaseController
             $bill->save();
         }
         $goal = Goal::create($input);
+
+        // Создание повтора для расхода
+        switch ($request->goal_reminder) {
+            case '0':
+                return $this->sendResponse($goal, 'Цель успешно создана.');
+                break;
+            case '1':
+                $repeatDate = $goal->created_at->addDays(1);
+                break;
+            case '2':   
+                $repeatDate = $goal->created_at->addDays(7);
+                break;
+            case '3':   
+                $repeatDate = $goal->created_at->addDays(30);
+                break;
+            
+        }
+        $goalReminderInput = [
+            'goal_id' => $goal->id,
+            'goal_reminder' => $goal->goal_reminder,
+            'goal_reminder_date' => $repeatDate
+        ];
+
+        $goalReminder = GoalReminder::create($goalReminderInput);
+
         return $this->sendResponse($goal, 'Цель успешно создана.');
     }
 
@@ -116,6 +142,51 @@ class GoalController extends BaseController
             $bill->save();
         }
 
+        /* Обработка смены повтора */
+        if($goal->goal_reminder != $request->goal_reminder) {
+            if($goal->goal_reminder != 0) {
+                $goalReminder = GoalReminder::where('goal_id', $goal->id);
+                switch ($request->goal_reminder) {
+                    case '0':
+                        $goalReminder->delete();
+                        break;
+                    case '1':
+                        $goalReminder->goal_reminder_date = $goal->created_at->addDays(1);
+                        break;
+                    case '2':
+                        $goalReminder->goal_reminder_date = $goal->created_at->addDays(7);
+                        break;
+                    case '3':
+                        $goalReminder->goal_reminder_date = $goal->created_at->addDays(30);
+                        break;
+                }
+
+                $goalReminder->save();
+            } else {
+                // Создание повтора для расхода
+                switch ($request->repeat) {
+                    case '1':
+                        $repeatDate = $goal->created_at->addDays(1);
+                        break;
+                    case '2':   
+                        $repeatDate = $goal->created_at->addDays(7);
+                        break;
+                    case '3':   
+                        $repeatDate = $goal->created_at->addDays(30);
+                        break;
+                    
+                }
+
+                $goalReminderInput = [
+                    'goal_id' => $goal->id,
+                    'goal_reminder' => $goal->goal_reminder,
+                    'goal_reminder_date' => $repeatDate
+                ];
+            
+                $goalReminder = GoalReminder::create($goalReminderInput);
+            }
+        }
+
         $goal->fill($request->all());
         $goal->save();
         return $this->sendResponse($goal, 'Цель успешно изменена.');
@@ -149,6 +220,11 @@ class GoalController extends BaseController
             'important' => $goal->goal_important,
         );
 
+        if($goal->goal_reminder != 0) {
+            $goalReminder = GoalReminder::where('goal_id', $goal->id);
+            $goalReminder->delete();
+        }
+
         $goal->save();
         return $this->sendResponse($goal, 'Цель успешно завершена.');
     }
@@ -168,6 +244,11 @@ class GoalController extends BaseController
         $expenses->delete();
         $bill->save();
         $goal->delete();
+
+        if($goal->goal_reminder != 0) {
+            $goalReminder = GoalReminder::where('goal_id', $goal->id);
+            $goalReminder->delete();
+        }
 
         return $this->sendResponse($goal, 'Цель успешна удалена.');
     }

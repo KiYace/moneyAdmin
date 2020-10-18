@@ -59,6 +59,11 @@ class CategoryCrudController extends CrudController
           'name' => 'user_id',
           'label' => 'ИД пользователя',
         ]);
+        $this->crud->addColumn([
+          'type' => 'check',
+          'name' => 'display',
+          'label' => 'Отображение',
+        ]);
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -98,6 +103,11 @@ class CategoryCrudController extends CrudController
           'entity' => 'user',
           'attribute' => 'id',
           'label' => 'ИД пользователя',
+        ]);
+        $this->crud->addField([
+          'type' => 'checkbox',
+          'name' => 'display',
+          'label' => 'Отображение',
         ]);
 
         /**

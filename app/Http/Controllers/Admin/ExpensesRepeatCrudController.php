@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\SourceRequest;
+use App\Http\Requests\ExpensesRepeatRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class SourceCrudController
+ * Class ExpensesRepeatCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class SourceCrudController extends CrudController
+class ExpensesRepeatCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class SourceCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Source::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/source');
-        CRUD::setEntityNameStrings('источник', 'Источники');
+        CRUD::setModel(\App\Models\ExpensesRepeat::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/expensesrepeat');
+        CRUD::setEntityNameStrings('потвор расхода', 'повторы расходов');
     }
 
     /**
@@ -40,29 +40,24 @@ class SourceCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->crud->addColumn([
-          'type' => 'text',
-          'name' => 'source_name',
-          'label' => 'Название источника',
+          'type' => 'number',
+          'name' => 'id',
+          'label' => 'ID повтора',
         ]);
         $this->crud->addColumn([
           'type' => 'text',
-          'name' => 'source_ico',
-          'label' => 'Иконка источника',
+          'name' => 'expense_id',
+          'label' => 'ID расхода',
         ]);
         $this->crud->addColumn([
-          'type' => 'text',
-          'name' => 'color',
-          'label' => 'Цвет',
+          'type' => 'nubmber',
+          'name' => 'expense_repeat',
+          'label' => 'Режим повтора',
         ]);
         $this->crud->addColumn([
-          'type' => 'text',
-          'name' => 'user_id',
-          'label' => 'ИД пользователя',
-        ]);
-        $this->crud->addColumn([
-          'type' => 'check',
-          'name' => 'display',
-          'label' => 'Отображение',
+          'type' => 'datetime',
+          'name' => 'expense_repeat_date',
+          'label' => 'Дата повтора',
         ]);
     }
 
@@ -74,34 +69,25 @@ class SourceCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(SourceRequest::class);
+        CRUD::setValidation(ExpensesRepeatRequest::class);
 
         $this->crud->addField([
-          'type' => 'text',
-          'name' => 'source_name',
-          'label' => 'Название источника',
-        ]);
-        $this->crud->addField([
-          'type' => 'text',
-          'name' => 'source_ico',
-          'label' => 'Иконка источника',
-        ]);
-        $this->crud->addField([
-          'type' => 'color_picker',
-          'name' => 'color',
-          'label' => 'Цвет',
-        ]);
-        $this->crud->addField([
           'type' => 'select2',
-          'name' => 'user_id',
-          'entity' => 'user',
+          'name' => 'expense_id',
+          'entity' => 'expense',
           'attribute' => 'id',
-          'label' => 'ИД пользователя',
+          'label' => 'ИД расхода',
         ]);
         $this->crud->addField([
-          'type' => 'checkbox',
-          'name' => 'display',
-          'label' => 'Отображение',
+          'type' => 'select_from_array',
+          'options' => ['0' => '', '1' => 'Каждый день', '2' => 'Каждую неделю', '3' => 'Каждый месяц'],
+          'name' => 'expense_repeat',
+          'label' => 'Режим повтора',
+        ]);
+        $this->crud->addField([
+          'type' => 'datetime',
+          'name' => 'expense_repeat_date',
+          'label' => 'Дата повтора',
         ]);
     }
 

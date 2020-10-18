@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\SourceRequest;
+use App\Http\Requests\GoalReminderRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class SourceCrudController
+ * Class GoalReminderCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class SourceCrudController extends CrudController
+class GoalReminderCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class SourceCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Source::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/source');
-        CRUD::setEntityNameStrings('источник', 'Источники');
+        CRUD::setModel(\App\Models\GoalReminder::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/goalreminder');
+        CRUD::setEntityNameStrings('напоминание цели', 'напоминания целей');
     }
 
     /**
@@ -40,29 +40,24 @@ class SourceCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->crud->addColumn([
-          'type' => 'text',
-          'name' => 'source_name',
-          'label' => 'Название источника',
+          'type' => 'number',
+          'name' => 'id',
+          'label' => 'ID напоминания',
         ]);
         $this->crud->addColumn([
           'type' => 'text',
-          'name' => 'source_ico',
-          'label' => 'Иконка источника',
+          'name' => 'goal_id',
+          'label' => 'ID цели',
         ]);
         $this->crud->addColumn([
-          'type' => 'text',
-          'name' => 'color',
-          'label' => 'Цвет',
+          'type' => 'nubmber',
+          'name' => 'goal_reminder',
+          'label' => 'Режим напоминания',
         ]);
         $this->crud->addColumn([
-          'type' => 'text',
-          'name' => 'user_id',
-          'label' => 'ИД пользователя',
-        ]);
-        $this->crud->addColumn([
-          'type' => 'check',
-          'name' => 'display',
-          'label' => 'Отображение',
+          'type' => 'datetime',
+          'name' => 'goal_reminder_date',
+          'label' => 'Дата завершения цели',
         ]);
     }
 
@@ -74,34 +69,25 @@ class SourceCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(SourceRequest::class);
+        CRUD::setValidation(GoalReminderRequest::class);
 
         $this->crud->addField([
-          'type' => 'text',
-          'name' => 'source_name',
-          'label' => 'Название источника',
-        ]);
-        $this->crud->addField([
-          'type' => 'text',
-          'name' => 'source_ico',
-          'label' => 'Иконка источника',
-        ]);
-        $this->crud->addField([
-          'type' => 'color_picker',
-          'name' => 'color',
-          'label' => 'Цвет',
-        ]);
-        $this->crud->addField([
           'type' => 'select2',
-          'name' => 'user_id',
-          'entity' => 'user',
+          'name' => 'goal_id',
+          'entity' => 'goal',
           'attribute' => 'id',
-          'label' => 'ИД пользователя',
+          'label' => 'ИД цели',
         ]);
         $this->crud->addField([
-          'type' => 'checkbox',
-          'name' => 'display',
-          'label' => 'Отображение',
+          'type' => 'select_from_array',
+          'options' => ['0' => '', '1' => 'Каждый день', '2' => 'Каждую неделю', '3' => 'Каждый месяц'],
+          'name' => 'goal_reminder',
+          'label' => 'Режим напоминания',
+        ]);
+        $this->crud->addField([
+          'type' => 'datetime',
+          'name' => 'goal_reminder_date',
+          'label' => 'Дата завершения цели',
         ]);
     }
 

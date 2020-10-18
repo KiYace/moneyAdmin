@@ -10,6 +10,7 @@ use App\Models\Income;
 use App\Models\Category;
 use App\Models\Source;
 use App\Models\Debt;
+use App\Models\DebtReminder;
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
@@ -108,7 +109,34 @@ class DebtController extends BaseController
             }
                 
         }
+
         $debt = Debt::create($input);
+
+         // Создание повтора для расхода
+         switch ($request->debt_reminder) {
+            case '0':
+                return $this->sendResponse($debt, 'Долг успешно создан.');
+                break;
+            case '1':
+                $repeatDate = $debt->created_at->addDays(1);
+                break;
+            case '2':   
+                $repeatDate = $debt->created_at->addDays(7);
+                break;
+            case '3':   
+                $repeatDate = $debt->created_at->addDays(30);
+                break;
+            
+        }
+        $debtReminderInput = [
+            'debt_id' => $debt->id,
+            'debt_type' => $debt->type,
+            'debt_reminder' => $debt->debt_reminder,
+            'debt_reminder_date' => $repeatDate
+        ];
+
+        $debtReminder = DebtReminder::create($debtReminderInput);
+
         return $this->sendResponse($debt, 'Долг успешно создан.');
     }
 
@@ -204,6 +232,52 @@ class DebtController extends BaseController
             }
         }
 
+        /* Обработка смены повтора */
+        if($debt->debt_reminder != $request->debt_reminder) {
+            if($debt->debt_reminder != 0) {
+                $debtReminder = DebtReminder::where('debt_id', $debt->id);
+                switch ($request->debt_reminder) {
+                    case '0':
+                        $debtReminder->delete();
+                        break;
+                    case '1':
+                        $debtReminder->debt_reminder_date = $debt->created_at->addDays(1);
+                        break;
+                    case '2':
+                        $debtReminder->debt_reminder_date = $debt->created_at->addDays(7);
+                        break;
+                    case '3':
+                        $debtReminder->debt_reminder_date = $debt->created_at->addDays(30);
+                        break;
+                }
+
+                $debtReminder->save();
+            } else {
+                // Создание повтора для расхода
+                switch ($request->repeat) {
+                    case '1':
+                        $repeatDate = $debt->created_at->addDays(1);
+                        break;
+                    case '2':   
+                        $repeatDate = $debt->created_at->addDays(7);
+                        break;
+                    case '3':   
+                        $repeatDate = $debt->created_at->addDays(30);
+                        break;
+                    
+                }
+
+                $debtReminderInput = [
+                    'debt_id' => $debt->id,
+                    'debt_type' => $debt->debt_type,
+                    'debt_reminder' => $debt->debt_reminder,
+                    'debt_reminder_date' => $repeatDate
+                ];
+            
+                $debtReminder = DebtReminder::create($debtReminderInput);
+            }
+        }
+
         $debt->fill($request->all());
         $debt->save();
         return $this->sendResponse($debt, 'Долг успешно изменен.');
@@ -266,6 +340,11 @@ class DebtController extends BaseController
             $expense = Expenses::create($expenseInput);
             $bill->save();
         }
+
+        if($debt->debt_reminder != 0) {
+            $debtReminder = DebtReminder::where('debt_id', $debt->id);
+            $debtReminder->delete();
+        }
         
 
         $debt->save();
@@ -290,6 +369,11 @@ class DebtController extends BaseController
             $bill->balance = $bill->balance - $debt->debt_sum;
             $incomes = Incomes::where('debt_id', $debt->debt_id);
             $incomes->delete();
+        }
+
+        if($debt->debt_reminder != 0) {
+            $debtReminder = DebtReminder::where('debt_id', $debt->id);
+            $debtReminder->delete();
         }
         
         $bill->save();

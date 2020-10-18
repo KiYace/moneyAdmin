@@ -5,9 +5,10 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Http\Request;
 use App\Models\Bill;
-use App\Models\Expenses;
+use App\Models\incomes;
 use App\Models\Income;
 use App\Models\Source;
+use App\Models\IncomesRepeat;
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
@@ -76,10 +77,36 @@ class IncomesController extends BaseController
             return $this->sendError('Ошибка валидации.', $validator->errors());       
         }
         $input = $request->all();
-        $income = Income::create($input);
         $bill = Bill::find($income->bill_id);
         $bill->balance = $bill->balance + $income->sum;
+        $income = Income::create($input);
         $bill->save();
+
+        // Создание повтора для расхода
+        switch ($request->repeat) {
+            case '0':
+                return $this->sendResponse($income, 'Доход успешно создан.');
+                break;
+            case '1':
+                $repeatDate = $income->created_at->addDays(1);
+                break;
+            case '2':   
+                $repeatDate = $income->created_at->addDays(7);
+                break;
+            case '3':   
+                $repeatDate = $income->created_at->addDays(30);
+                break;
+            
+        }
+        $incomeRepeatInput = [
+            'income_id' => $income->id,
+            'income_repeat' => $income->repeat,
+            'income_repeat_date' => $repeatDate
+        ];
+
+        $incomeRepeat = IncomesRepeat::create($incomeRepeatInput);
+
+
         return $this->sendResponse($income, 'Доход успешно создан.');
     }
 
@@ -123,6 +150,51 @@ class IncomesController extends BaseController
             $bill->balance = $bill->balance + $request->sum;
             $bill->save();
         }
+
+        /* Обработка смены повтора */
+        if($income->repeat != $request->repeat) {
+            if($income->repeat != 0) {
+                $incomeRepeat = IncomesRepeat::where('expnense_id', $income->id);
+                switch ($request->repeat) {
+                    case '0':
+                        $incomeRepeat->delete();
+                        break;
+                    case '1':
+                        $incomeRepeat->income_repeat_date = $income->created_at->addDays(1);
+                        break;
+                    case '2':
+                        $incomeRepeat->income_repeat_date = $income->created_at->addDays(7);
+                        break;
+                    case '3':
+                        $incomeRepeat->income_repeat_date = $income->created_at->addDays(30);
+                        break;
+                }
+
+                $incomeRepeat->save();
+            } else {
+                // Создание повтора для расхода
+                switch ($request->repeat) {
+                    case '1':
+                        $repeatDate = $income->created_at->addDays(1);
+                        break;
+                    case '2':   
+                        $repeatDate = $income->created_at->addDays(7);
+                        break;
+                    case '3':   
+                        $repeatDate = $income->created_at->addDays(30);
+                        break;
+                    
+                }
+
+                $incomeRepeatInput = [
+                    'income_id' => $income->id,
+                    'income_repeat' => $income->repeat,
+                    'income_repeat_date' => $repeatDate
+                ];
+            
+                $incomeRepeat = IncomesRepeat::create($incomeRepeatInput);
+            }
+        }
         
         $income->fill($request->all());
         $income->save();
@@ -146,6 +218,11 @@ class IncomesController extends BaseController
         $bill = Bill::find($income->bill_id);
         $bill->balance = $bill->balance - $income->sum;
         $bill->save();
+
+        if($income->repeat != 0) {
+            $incomeRepeat = IncomesRepeat::where('expnense_id', $income->id);
+            $incomeRepeat->delete();
+        }
 
         $income->delete();
         return $this->sendResponse($income, 'Доход успешно удален.');

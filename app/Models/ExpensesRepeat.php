@@ -5,7 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class Income extends Model
+class ExpensesRepeat extends Model
 {
     use CrudTrait;
 
@@ -15,17 +15,13 @@ class Income extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'incomes';
+    protected $table = 'expenses_repeat';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
     // protected $fillable = [];
     // protected $hidden = [];
     // protected $dates = [];
-    protected $casts = [
-      'tags_id' => 'json',
-      'source' => 'string'
-    ];
 
     /*
     |--------------------------------------------------------------------------
@@ -39,29 +35,9 @@ class Income extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function user()
+    public function expense()
     {
-      return $this->belongsTo('App\Models\Appuser', 'user_id', 'id');
-    }
-
-    public function source()
-    {
-      return $this->belongsTo('App\Models\Source', 'source', 'id');
-    }
-
-    public function bill()
-    {
-      return $this->belongsTo('App\Models\Bill', 'bill_id', 'id');
-    }
-
-    public function goal()
-    {
-      return $this->belongsTo('App\Models\Goal', 'goal_id', 'id');
-    }
-
-    public function tag()
-    {
-      return $this->hasMany('App\Models\Tag', 'tags_id', 'id');
+      return $this->belongsTo('App\Models\Expenses', 'expense_id', 'id');
     }
 
     /*

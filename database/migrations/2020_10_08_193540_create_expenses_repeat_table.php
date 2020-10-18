@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class EditFieldToCategoryTable extends Migration
+class CreateExpensesRepeatTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class EditFieldToCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::table('categories', function (Blueprint $table) {
-            //
+        Schema::create('expenses_repeat', function (Blueprint $table) {
+            $table->id();
+            $table->integer('expense_id');
+            $table->integer('expense_repeat');
+            $table->date('expense_repeat_date');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ class EditFieldToCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::table('categories', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('expenses_repeat');
     }
 }

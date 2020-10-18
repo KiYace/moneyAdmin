@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Bill;
 use App\Models\Expenses;
 use App\Models\Income;
+use App\Models\ExpensesRepeat;
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
@@ -85,10 +86,36 @@ class ExpensesController extends BaseController
             return $this->sendError('Ошибка валидации.', $validator->errors());       
         }
         $input = $request->all();
-        $expense = Expenses::create($input);
-        $bill = Bill::find($expense->bill_id);
+        $bill = Bill::find($request->bill_id);
         $bill->balance = $bill->balance - $request->sum;
+        $expense = Expenses::create($input);
         $bill->save();
+
+        // Создание повтора для расхода
+        switch ($request->repeat) {
+            case '0':
+                return $this->sendResponse($expense, 'Расход успешно создан.');
+                break;
+            case '1':
+                $repeatDate = $expense->created_at->addDays(1);
+                break;
+            case '2':   
+                $repeatDate = $expense->created_at->addDays(7);
+                break;
+            case '3':   
+                $repeatDate = $expense->created_at->addDays(30);
+                break;
+            
+        }
+        $expenseRepeatInput = [
+            'expense_id' => $expense->id,
+            'expense_repeat' => $expense->repeat,
+            'expense_repeat_date' => $repeatDate
+        ];
+
+        $expenseRepeat = ExpensesRepeat::create($expenseRepeatInput);
+        
+        
         return $this->sendResponse($expense, 'Расход успешно создан.');
     }
 
@@ -126,6 +153,51 @@ class ExpensesController extends BaseController
             $bill->balance = $bill->balance - $request->sum;
             $bill->save();
         }
+
+        /* Обработка смены повтора */
+        if($expense->repeat != $request->repeat) {
+            if($expense->repeat != 0) {
+                $expenseRepeat = ExpensesRepeat::where('expnense_id', $expense->id);
+                switch ($request->repeat) {
+                    case '0':
+                        $expenseRepeat->delete();
+                        break;
+                    case '1':
+                        $expenseRepeat->expense_repeat_date = $expense->created_at->addDays(1);
+                        break;
+                    case '2':
+                        $expenseRepeat->expense_repeat_date = $expense->created_at->addDays(7);
+                        break;
+                    case '3':
+                        $expenseRepeat->expense_repeat_date = $expense->created_at->addDays(30);
+                        break;
+                }
+
+                $expenseRepeat->save();
+            } else {
+                // Создание повтора для расхода
+                switch ($request->repeat) {
+                    case '1':
+                        $repeatDate = $expense->created_at->addDays(1);
+                        break;
+                    case '2':   
+                        $repeatDate = $expense->created_at->addDays(7);
+                        break;
+                    case '3':   
+                        $repeatDate = $expense->created_at->addDays(30);
+                        break;
+                    
+                }
+
+                $expenseRepeatInput = [
+                    'expense_id' => $expense->id,
+                    'expense_repeat' => $expense->repeat,
+                    'expense_repeat_date' => $repeatDate
+                ];
+            
+                $expenseRepeat = ExpensesRepeat::create($expenseRepeatInput);
+            }
+        }
         
         $expense->fill($request->all());
         $expense->save();
@@ -143,6 +215,11 @@ class ExpensesController extends BaseController
         $bill = Bill::find($expense->bill_id);
         $bill->balance = $bill->balance + $expense->sum;
         $bill->save();
+        
+        if($expense->repeat != 0) {
+            $expenseRepeat = ExpensesRepeat::where('expnense_id', $expense->id);
+            $expenseRepeat->delete();
+        }
 
         $expense->delete();
         return $this->sendResponse($expense, 'Расход успешно удален.');
