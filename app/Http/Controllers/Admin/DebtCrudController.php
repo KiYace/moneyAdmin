@@ -77,7 +77,7 @@ class DebtCrudController extends CrudController
           'label' => 'Валюта',
         ]);
         $this->crud->addColumn([
-          'type' => 'date',
+          'type' => 'datetime',
           'name' => 'debt_finish',
           'label' => 'Дата завершения',
         ]);
@@ -152,7 +152,7 @@ class DebtCrudController extends CrudController
           'label' => 'Валюта',
         ]);
         $this->crud->addField([
-          'type' => 'date',
+          'type' => 'datetime',
           'name' => 'debt_finish',
           'label' => 'Дата завершения',
         ]);

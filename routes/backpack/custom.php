@@ -24,4 +24,8 @@ Route::group([
     Route::crud('source', 'SourceCrudController');
     Route::crud('goal', 'GoalCrudController');
     Route::crud('debt', 'DebtCrudController');
+    Route::crud('expensesrepeat', 'ExpensesRepeatCrudController');
+    Route::crud('incomesrepeat', 'IncomesRepeatCrudController');
+    Route::crud('debtreminder', 'DebtReminderCrudController');
+    Route::crud('goalreminder', 'GoalReminderCrudController');
 }); // this should be the absolute last line of this file

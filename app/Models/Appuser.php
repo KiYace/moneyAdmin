@@ -20,7 +20,7 @@ class Appuser extends Model
     // public $timestamps = false;
     protected $guarded = ['id'];
     // protected $fillable = [];
-    // protected $hidden = [];
+    protected $hidden = ['password'];
     // protected $dates = [];
 
     /*

@@ -39,32 +39,37 @@ class TagCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->crud->addColumn([
-          'type' => 'text',
-          'name' => 'tag_name',
-          'label' => 'Название тега',
-        ]);
-        $this->crud->addColumn([
-          'type' => 'text',
-          'name' => 'tag_ico',
-          'label' => 'Иконка тега',
-        ]);
-        $this->crud->addColumn([
-          'type' => 'text',
-          'name' => 'color',
-          'label' => 'Цвет',
-        ]);
-        $this->crud->addColumn([
-          'type' => 'text',
-          'name' => 'user_id',
-          'label' => 'ИД пользователя',
-        ]);
-
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+      $this->crud->addColumn([
+        'type' => 'number',
+        'name' => 'id',
+        'label' => 'ID тега',
+      ]);
+      $this->crud->addColumn([
+        'type' => 'text',
+        'name' => 'tag_name',
+        'label' => 'Название тега',
+      ]);
+      $this->crud->addColumn([
+        'type' => 'text',
+        'name' => 'tag_ico',
+        'label' => 'Иконка тега',
+      ]);
+      $this->crud->addColumn([
+        'type' => 'text',
+        'name' => 'color',
+        'label' => 'Цвет',
+      ]);
+      $this->crud->addColumn([
+        'type' => 'text',
+        'name' => 'user_id',
+        'label' => 'ИД пользователя',
+      ]);
+      
+      /**
+       * Columns can be defined using the fluent syntax or array syntax:
+       * - CRUD::column('price')->type('number');
+       * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
+       */
     }
 
     /**

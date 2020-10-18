@@ -71,6 +71,11 @@ class ExpensesCrudController extends CrudController
           'label' => 'Счет',
         ]);
         $this->crud->addColumn([
+          'type' => 'number',
+          'name' => 'goal_id',
+          'label' => 'Счет',
+        ]);
+        $this->crud->addColumn([
           'type' => 'text',
           'name' => 'shop',
           'label' => 'Магазин',
@@ -83,7 +88,7 @@ class ExpensesCrudController extends CrudController
         ]);
         $this->crud->addColumn([
           'type' => 'text',
-          'name' => 'tags',
+          'name' => 'tags_id',
           'label' => 'Теги',
         ]);
         $this->crud->addColumn([
@@ -93,7 +98,7 @@ class ExpensesCrudController extends CrudController
         ]);
         $this->crud->addColumn([
           'type' => 'select_from_array',
-          'options' => ['0' => 'Каждый день', '1' => 'Каждую неделю', '2' => 'Каждый месяц'],
+          'options' => ['0' => '', '1' => 'Каждый день', '2' => 'Каждую неделю', '3' => 'Каждый месяц'],
           'name' => 'repeat',
           'label' => 'Повтор',
         ]);
@@ -153,13 +158,15 @@ class ExpensesCrudController extends CrudController
         ]);
         $this->crud->addField([
           'type' => 'select_from_array',
-          'options' => ['0' => 'Не важно', '1' => 'Важно', '2' => 'Очень важно'],
+          'options' => ['0' => '', '1' => 'Каждый день', '2' => 'Каждую неделю', '3' => 'Каждый месяц'],
           'name' => 'important',
           'label' => 'Важность',
         ]);
         $this->crud->addField([
-          'type' => 'text',
-          'name' => 'tags',
+          'type' => 'relationship',
+          'name' => 'tags_id',
+          'entity' => 'tag',
+          'attribute' => 'tag_name',
           'label' => 'Теги',
         ]);
         $this->crud->addField([
@@ -169,7 +176,7 @@ class ExpensesCrudController extends CrudController
         ]);
         $this->crud->addField([
           'type' => 'select_from_array',
-          'options' => ['0' => 'Каждый день', '1' => 'Каждую неделю', '2' => 'Каждый месяц'],
+          'options' => ['0' => '', '1' => 'Каждый день', '2' => 'Каждую неделю', '3' => 'Каждый месяц'],
           'name' => 'repeat',
           'label' => 'Повтор',
         ]);

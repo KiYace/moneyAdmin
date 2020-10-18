@@ -54,6 +54,11 @@ class Income extends Model
       return $this->belongsTo('App\Models\Bill', 'bill_id', 'id');
     }
 
+    public function goal()
+    {
+      return $this->belongsTo('App\Models\Goal', 'goal_id', 'id');
+    }
+
     public function tag()
     {
       return $this->hasMany('App\Models\Tag', 'tags_id', 'id');

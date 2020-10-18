@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTagsTable extends Migration
+class CreateGoalsReminderTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('goal_reminder', function (Blueprint $table) {
             $table->id();
-            $table->string('tag_name', 15)->nullable(false)->unique();
-            $table->string('tag_ico', 30)->nullable();
-            $table->string('color', 7)->nullable();
-            $table->integer('user_id')->nullable();
-
+            $table->integer('goal_id');
+            $table->integer('goal_type');
+            $table->integer('goal_reminder');
+            $table->date('goal_reminder_date');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('goals_reminder');
     }
 }

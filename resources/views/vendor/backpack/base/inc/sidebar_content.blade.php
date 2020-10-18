@@ -10,3 +10,7 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('source') }}'><i class='nav-icon la la-dollar-sign'></i> Источники дохода</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('goal') }}'><i class='nav-icon la la-check-circle'></i> Цели</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('debt') }}'><i class='nav-icon la la-comment-dollar'></i> Долги</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('expensesrepeat') }}'><i class='nav-icon la la-reply'></i>Повторы расходов</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('incomesrepeat') }}'><i class='nav-icon la la-reply'></i> Повторы доходов</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('debtreminder') }}'><i class='nav-icon la la-fist-raised'></i> Напоминания долгов</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('goalreminder') }}'><i class='nav-icon la la-piggy-bank'></i> Напоминания целей</a></li>

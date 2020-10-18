@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\SourceRequest;
+use App\Http\Requests\DebtReminderRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class SourceCrudController
+ * Class DebtReminderCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class SourceCrudController extends CrudController
+class DebtReminderCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class SourceCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Source::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/source');
-        CRUD::setEntityNameStrings('источник', 'Источники');
+        CRUD::setModel(\App\Models\DebtReminder::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/debtreminder');
+        CRUD::setEntityNameStrings('напоминание долга', 'напоминания долгов');
     }
 
     /**
@@ -40,29 +40,29 @@ class SourceCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->crud->addColumn([
-          'type' => 'text',
-          'name' => 'source_name',
-          'label' => 'Название источника',
+          'type' => 'number',
+          'name' => 'id',
+          'label' => 'ID напоминания',
         ]);
         $this->crud->addColumn([
           'type' => 'text',
-          'name' => 'source_ico',
-          'label' => 'Иконка источника',
+          'name' => 'debt_id',
+          'label' => 'ID долга',
         ]);
         $this->crud->addColumn([
-          'type' => 'text',
-          'name' => 'color',
-          'label' => 'Цвет',
+            'type' => 'text',
+            'name' => 'debt_type',
+            'label' => 'Тип долга',
+          ]);
+        $this->crud->addColumn([
+          'type' => 'nubmber',
+          'name' => 'debt_reminder',
+          'label' => 'Режим напоминания',
         ]);
         $this->crud->addColumn([
-          'type' => 'text',
-          'name' => 'user_id',
-          'label' => 'ИД пользователя',
-        ]);
-        $this->crud->addColumn([
-          'type' => 'check',
-          'name' => 'display',
-          'label' => 'Отображение',
+          'type' => 'datetime',
+          'name' => 'debt_reminder_date',
+          'label' => 'Дата завершения долга',
         ]);
     }
 
@@ -74,34 +74,31 @@ class SourceCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(SourceRequest::class);
+        CRUD::setValidation(DebtReminderRequest::class);
 
         $this->crud->addField([
-          'type' => 'text',
-          'name' => 'source_name',
-          'label' => 'Название источника',
-        ]);
-        $this->crud->addField([
-          'type' => 'text',
-          'name' => 'source_ico',
-          'label' => 'Иконка источника',
-        ]);
-        $this->crud->addField([
-          'type' => 'color_picker',
-          'name' => 'color',
-          'label' => 'Цвет',
-        ]);
-        $this->crud->addField([
           'type' => 'select2',
-          'name' => 'user_id',
-          'entity' => 'user',
+          'name' => 'debt_id',
+          'entity' => 'debt',
           'attribute' => 'id',
-          'label' => 'ИД пользователя',
+          'label' => 'ИД долга',
         ]);
         $this->crud->addField([
-          'type' => 'checkbox',
-          'name' => 'display',
-          'label' => 'Отображение',
+          'type' => 'select_from_array',
+          'options' => ['1' => 'Заем', '2' => 'Долг'],
+          'name' => 'debt_type',
+          'label' => 'Тип долга',
+        ]);
+        $this->crud->addField([
+          'type' => 'select_from_array',
+          'options' => ['0' => '', '1' => 'Каждый день', '2' => 'Каждую неделю', '3' => 'Каждый месяц'],
+          'name' => 'debt_reminder',
+          'label' => 'Режим напоминания',
+        ]);
+        $this->crud->addField([
+          'type' => 'datetime',
+          'name' => 'debt_reminder_date',
+          'label' => 'Дата завершения долга',
         ]);
     }
 

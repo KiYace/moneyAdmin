@@ -22,6 +22,9 @@ class Expenses extends Model
     // protected $fillable = [];
     // protected $hidden = [];
     // protected $dates = [];
+    protected $casts = [
+      'tags_id' => 'json',
+    ];
 
     /*
     |--------------------------------------------------------------------------
@@ -48,6 +51,11 @@ class Expenses extends Model
     public function category()
     {
       return $this->belongsTo('App\Models\Category', 'category_id', 'id');
+    }
+
+    public function tag()
+    {
+      return $this->hasMany('App\Models\Tag', 'tags_id', 'id');
     }
 
     /*

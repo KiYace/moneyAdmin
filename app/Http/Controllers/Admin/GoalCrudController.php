@@ -78,13 +78,18 @@ class GoalCrudController extends CrudController
         ]);
         $this->crud->addColumn([
           'type' => 'text',
+          'name' => 'bill_id',
+          'label' => 'ИД счета',
+        ]);
+        $this->crud->addColumn([
+          'type' => 'text',
           'name' => 'goal_finish',
           'label' => 'Дата завершения',
         ]);
         $this->crud->addColumn([
           'type' => 'select_from_array',
           'options' => ['0' => 'Не важно', '1' => 'Важно', '2' => 'Очень важно'],
-          'name' => 'important',
+          'name' => 'goal_important',
           'label' => 'Важность',
         ]);
         $this->crud->addColumn([
@@ -144,7 +149,14 @@ class GoalCrudController extends CrudController
           'label' => 'ИД пользователя',
         ]);
         $this->crud->addField([
-          'type' => 'date',
+          'type' => 'select2',
+          'name' => 'bill_id',
+          'entity' => 'bill',
+          'attribute' => 'id',
+          'label' => 'ИД счета',
+        ]);
+        $this->crud->addField([
+          'type' => 'datetime',
           'name' => 'goal_finish',
           'label' => 'Дата завершения',
         ]);

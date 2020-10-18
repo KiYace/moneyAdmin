@@ -39,32 +39,37 @@ class BillCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->crud->addColumn([
-            'type' => 'text',
-            'name' => 'bill_name',
-            'label' => 'Название счета',
-          ]);
-        $this->crud->addColumn([
+      $this->crud->addColumn([
+        'type' => 'number',
+        'name' => 'id',
+        'label' => 'ID',
+      ]);
+      $this->crud->addColumn([
           'type' => 'text',
-          'name' => 'user_id',
-          'label' => 'ИД пользователя',
+          'name' => 'bill_name',
+          'label' => 'Название счета',
         ]);
-        $this->crud->addColumn([
-          'type' => 'number',
-          'name' => 'balance',
-          'label' => 'Баланс',
-        ]);
-        $this->crud->addColumn([
-          'type' => 'select_from_array',
-          'options' => ['RUB' => 'Рубли', 'USD' => 'Доллары', 'EUR' => 'Евро'],
-          'name' => 'currency',
-          'label' => 'Валюта',
-        ]);
-        $this->crud->addColumn([
-          'type' => 'number',
-          'name' => 'limit',
-          'label' => 'Ограничения в месяц',
-        ]);
+      $this->crud->addColumn([
+        'type' => 'text',
+        'name' => 'user_id',
+        'label' => 'ИД пользователя',
+      ]);
+      $this->crud->addColumn([
+        'type' => 'number',
+        'name' => 'balance',
+        'label' => 'Баланс',
+      ]);
+      $this->crud->addColumn([
+        'type' => 'select_from_array',
+        'options' => ['RUB' => 'Рубли', 'USD' => 'Доллары', 'EUR' => 'Евро'],
+        'name' => 'currency',
+        'label' => 'Валюта',
+      ]);
+      $this->crud->addColumn([
+        'type' => 'number',
+        'name' => 'limit',
+        'label' => 'Ограничения в месяц',
+      ]);
     }
 
     /**
@@ -75,35 +80,35 @@ class BillCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(BillRequest::class);
-        $this->crud->addField([
-          'type' => 'text',
-          'name' => 'bill_name',
-          'label' => 'Название счета',
-        ]);
-        $this->crud->addField([
-          'type' => 'select2',
-          'name' => 'user_id',
-          'entity' => 'user',
-          'attribute' => 'id',
-          'label' => 'ИД пользователя',
-        ]);
-        $this->crud->addField([
-          'type' => 'number',
-          'name' => 'balance',
-          'label' => 'Баланс',
-        ]);
-        $this->crud->addField([
-          'type' => 'select_from_array',
-          'options' => ['RUB' => 'RUB', 'USD' => 'USD', 'EUR' => 'EUR'],
-          'name' => 'currency',
-          'label' => 'Валюта',
-        ]);
-        $this->crud->addField([
-          'type' => 'number',
-          'name' => 'limit',
-          'label' => 'Ограничения в месяц',
-        ]);
+      CRUD::setValidation(BillRequest::class);
+      $this->crud->addField([
+        'type' => 'text',
+        'name' => 'bill_name',
+        'label' => 'Название счета',
+      ]);
+      $this->crud->addField([
+        'type' => 'select2',
+        'name' => 'user_id',
+        'entity' => 'user',
+        'attribute' => 'id',
+        'label' => 'ИД пользователя',
+      ]);
+      $this->crud->addField([
+        'type' => 'number',
+        'name' => 'balance',
+        'label' => 'Баланс',
+      ]);
+      $this->crud->addField([
+        'type' => 'select_from_array',
+        'options' => ['RUB' => 'RUB', 'USD' => 'USD', 'EUR' => 'EUR'],
+        'name' => 'currency',
+        'label' => 'Валюта',
+      ]);
+      $this->crud->addField([
+        'type' => 'number',
+        'name' => 'limit',
+        'label' => 'Ограничения в месяц',
+      ]);
     }
 
     /**

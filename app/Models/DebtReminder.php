@@ -5,7 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class Goal extends Model
+class DebtReminder extends Model
 {
     use CrudTrait;
 
@@ -15,7 +15,7 @@ class Goal extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'goals';
+    protected $table = 'debt_reminder';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -35,13 +35,9 @@ class Goal extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function user()
+    public function debt()
     {
-      return $this->belongsTo('App\Models\Appuser', 'user_id', 'id');
-    }
-    public function bill()
-    {
-      return $this->belongsTo('App\Models\Bill', 'bill_id', 'id');
+      return $this->belongsTo('App\Models\Debt', 'debt_id', 'id');
     }
 
     /*

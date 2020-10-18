@@ -60,6 +60,11 @@ class IncomeCrudController extends CrudController
           'label' => 'Счет',
         ]);
         $this->crud->addColumn([
+          'type' => 'number',
+          'name' => 'goal_id',
+          'label' => 'Цель',
+        ]);
+        $this->crud->addColumn([
           'type' => 'text',
           'name' => 'source',
           'label' => 'Источник дохода',
@@ -126,6 +131,13 @@ class IncomeCrudController extends CrudController
           'entity' => 'bill',
           'attribute' => 'id',
           'label' => 'Счет',
+        ]);
+        $this->crud->addField([
+          'type' => 'select2',
+          'name' => 'goal_id',
+          'entity' => 'goal',
+          'attribute' => 'id',
+          'label' => 'Цель',
         ]);
         $this->crud->addField([
           'type' => 'select2',

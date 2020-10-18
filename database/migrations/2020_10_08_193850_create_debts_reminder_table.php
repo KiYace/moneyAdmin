@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTagsTable extends Migration
+class CreateDebtsReminderTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('debt_reminder', function (Blueprint $table) {
             $table->id();
-            $table->string('tag_name', 15)->nullable(false)->unique();
-            $table->string('tag_ico', 30)->nullable();
-            $table->string('color', 7)->nullable();
-            $table->integer('user_id')->nullable();
-
+            $table->integer('debt_id');
+            $table->integer('debt_type');
+            $table->integer('debt_reminder');
+            $table->date('debt_reminder_date');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('debt_reminder');
     }
 }
