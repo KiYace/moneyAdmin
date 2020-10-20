@@ -17,7 +17,7 @@ class CreateExpensesRepeatTable extends Migration
             $table->id();
             $table->integer('expense_id');
             $table->integer('expense_repeat');
-            $table->date('expense_repeat_date');
+            $table->datetime('expense_repeat_date');
             $table->timestamps();
         });
     }

@@ -17,7 +17,7 @@ class CreateIncomesRepeatTable extends Migration
             $table->id();
             $table->integer('income_id');
             $table->integer('income_repeat');
-            $table->date('income_repeat_date');
+            $table->datetime('income_repeat_date');
             $table->timestamps();
         });
     }

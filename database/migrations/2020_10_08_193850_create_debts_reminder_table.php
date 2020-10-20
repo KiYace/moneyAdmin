@@ -18,7 +18,7 @@ class CreateDebtsReminderTable extends Migration
             $table->integer('debt_id');
             $table->integer('debt_type');
             $table->integer('debt_reminder');
-            $table->date('debt_reminder_date');
+            $table->datetime('debt_reminder_date');
             $table->timestamps();
         });
     }

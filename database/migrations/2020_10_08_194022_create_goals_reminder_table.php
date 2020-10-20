@@ -18,7 +18,7 @@ class CreateGoalsReminderTable extends Migration
             $table->integer('goal_id');
             $table->integer('goal_type');
             $table->integer('goal_reminder');
-            $table->date('goal_reminder_date');
+            $table->datetime('goal_reminder_date');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateGoalsReminderTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('goals_reminder');
+        Schema::dropIfExists('goal_reminder');
     }
 }
